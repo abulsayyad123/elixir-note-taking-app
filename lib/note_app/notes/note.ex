@@ -1,4 +1,4 @@
-defmodule NoteApp.Note do
+defmodule NoteApp.Notes.Note do
   @enforce_keys [:title, :timestamp]
   defstruct [:id, :title, :body, :timestamp]
 
@@ -13,11 +13,11 @@ defmodule NoteApp.Note do
 
   # We will create:
   # GenServer for maintaining Notes
-  # GenServer will have callbacks for 
+  # GenServer will have callbacks for
     # - list_all notes
     # - get_particular note
     # - create note
     # - update note
     # - delete note
-    
+
 end

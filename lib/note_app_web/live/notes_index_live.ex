@@ -1,7 +1,7 @@
 defmodule NoteAppWeb.NotesIndexLive do
   use NoteAppWeb, :live_view
 
-  alias NoteApp.Note
+  alias NoteApp.Notes.Note
 
   def mount(_params, _session, socket) do
     all_notes = [ %Note{id: 1, title: "First Note", body: "First Post Body",timestamp: '15:06:30.841634Z' } , %Note{id: 2, title: "Second Note", body: "Second Post Body",timestamp: '15:06:30.841634Z'} ]
