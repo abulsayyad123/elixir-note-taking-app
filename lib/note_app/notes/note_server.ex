@@ -19,6 +19,10 @@ defmodule NoteApp.Notes.NoteServer do
     GenServer.cast(pid, {:delete_note, id})
   end
 
+  def update_note(pid, note) do
+    GenServer.cast(pid, {:update_note, note})
+  end
+
   # Server
   @impl true
   def init(notes) do
@@ -35,6 +39,12 @@ defmodule NoteApp.Notes.NoteServer do
   @impl true
   def handle_cast({:delete_note, id}, notes) do
     updated_notes = notes |> Enum.reject(fn note -> Map.get(note, :id) == id end)
+    {:noreply, updated_notes}
+  end
+
+  @impl true
+  def handle_cast({:update_note, note}, notes) do
+    updated_notes = update_in(notes, [Access.filter(& &1.id == note.id)], fn _ -> note end)
     {:noreply, updated_notes}
   end
 
