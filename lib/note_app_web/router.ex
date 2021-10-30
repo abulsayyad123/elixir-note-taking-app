@@ -19,6 +19,7 @@ defmodule NoteAppWeb.Router do
 
     live "/", NotesIndexLive
     live "/notes/new", NotesNewLive
+    live "/notes/:id/edit", NotesEditLive
   end
 
   # Other scopes may use custom stacks.
