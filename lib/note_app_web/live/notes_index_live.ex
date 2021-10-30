@@ -1,11 +1,13 @@
 defmodule NoteAppWeb.NotesIndexLive do
   use NoteAppWeb, :live_view
-
-  alias NoteApp.Notes.Note
+  alias NoteApp.Notes.NoteServer
+  alias NoteAppWeb.NotesNewLive
 
   def mount(_params, _session, socket) do
-    all_notes = [ %Note{id: 1, title: "First Note", body: "First Post Body",timestamp: '15:06:30.841634Z' } , %Note{id: 2, title: "Second Note", body: "Second Post Body",timestamp: '15:06:30.841634Z'} ]
-    {:ok, assign(socket, :notes, all_notes)}
+    all_notes = NoteServer.all_notes()
+    socket = assign(socket, :notes, all_notes)
+    socket = assign(socket, :notes_length, Kernel.length(all_notes))
+    {:ok, socket}
   end
 
   def render(assigns) do
@@ -13,7 +15,7 @@ defmodule NoteAppWeb.NotesIndexLive do
       <div class="notes">
         <div class="notes-header">
             <h2 class="notes-title">&#9782; Notes</h2>
-            <p class="notes-count">2</p>
+            <p class="notes-count"><%= @notes_length %></p>
         </div>
 
         <div class="notes-list">
@@ -24,6 +26,8 @@ defmodule NoteAppWeb.NotesIndexLive do
             </div>
           <% end %>
         </div>
+
+        <%= live_patch "+", to: Routes.live_path(@socket, NotesNewLive), class: "floating-button" %>
       </div >
     """
   end

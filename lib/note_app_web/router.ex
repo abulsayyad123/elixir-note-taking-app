@@ -18,6 +18,7 @@ defmodule NoteAppWeb.Router do
     pipe_through :browser
 
     live "/", NotesIndexLive
+    live "/notes/new", NotesNewLive
   end
 
   # Other scopes may use custom stacks.

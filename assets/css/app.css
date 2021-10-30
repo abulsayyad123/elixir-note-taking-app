@@ -238,8 +238,21 @@ a {
   scrollbar-width: none; /* Firefox */
 }
 
+.note input {
+  background-color: var(--color-white);
+  border: none;
+  padding: 16px 12px;
+  width: 100%;
+}
+
 .note textarea:active,
 .note textarea:focus {
+  outline: none;
+  border: none;
+}
+
+.note input:active,
+.note input:focus {
   outline: none;
   border: none;
 }
