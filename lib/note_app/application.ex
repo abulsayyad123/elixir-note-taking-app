@@ -13,9 +13,10 @@ defmodule NoteApp.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: NoteApp.PubSub},
       # Start the Endpoint (http/https)
-      NoteAppWeb.Endpoint
+      NoteAppWeb.Endpoint,
       # Start a worker by calling: NoteApp.Worker.start_link(arg)
       # {NoteApp.Worker, arg}
+      {NoteApp.Notes.NoteServer, nil}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

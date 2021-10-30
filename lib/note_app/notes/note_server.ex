@@ -3,24 +3,28 @@ defmodule NoteApp.Notes.NoteServer do
   use GenServer
 
   # Client
-  def start_link() do
-    GenServer.start_link(__MODULE__, [])
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def create_note(pid, note) do
-    GenServer.cast(pid, {:create_note, note})
+  def all_notes() do
+    GenServer.call(__MODULE__, :all_notes)
   end
 
-  def get_note(pid, id) do
-    GenServer.call(pid, {:get_note, id})
+  def create_note(note) do
+    GenServer.cast(__MODULE__, {:create_note, note})
   end
 
-  def delete_note(pid, id) do
-    GenServer.cast(pid, {:delete_note, id})
+  def get_note(id) do
+    GenServer.call(__MODULE__, {:get_note, id})
   end
 
-  def update_note(pid, note) do
-    GenServer.cast(pid, {:update_note, note})
+  def delete_note(id) do
+    GenServer.cast(__MODULE__, {:delete_note, id})
+  end
+
+  def update_note(note) do
+    GenServer.cast(__MODULE__, {:update_note, note})
   end
 
   # Server
@@ -52,6 +56,11 @@ defmodule NoteApp.Notes.NoteServer do
   def handle_call({:get_note, id}, _from, notes) do
     found_note = notes |> Enum.filter(fn note -> Map.get(note, :id) == id end) |> List.first
     {:reply, found_note, notes}
+  end
+
+  @impl true
+  def handle_call(:all_notes, _from, notes) do
+    {:reply, notes, notes}
   end
 
   defp add_id(notes, note) do
