@@ -37,6 +37,13 @@ defmodule NoteApp.Notes.NoteServer do
   def handle_cast({:create_note, note}, notes) do
     updated_note = add_id(notes, note)
     updates_notes = [updated_note | notes]
+
+    message = {:note_created, updated_note}
+    Phoenix.PubSub.broadcast(
+      NoteApp.PubSub,
+      "notes",
+      message
+    )
     {:noreply, updates_notes}
   end
 

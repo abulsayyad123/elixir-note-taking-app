@@ -3,8 +3,10 @@ defmodule NoteAppWeb.NotesIndexLive do
   alias NoteApp.Notes.NoteServer
   alias NoteAppWeb.NotesNewLive
   alias NoteAppWeb.NotesEditLive
+  alias NoteApp.Notes.Note
 
   def mount(_params, _session, socket) do
+    if connected?(socket), do: Note.subscribe()
     all_notes = NoteServer.all_notes()
     socket = assign(socket, :notes, all_notes)
     socket = assign(socket, :notes_length, Kernel.length(all_notes))
@@ -37,5 +39,10 @@ defmodule NoteAppWeb.NotesIndexLive do
 
   def handle_event("get-note-detail", %{"id" => id}, socket) do
     {:noreply, push_redirect(socket, to: Routes.live_path(socket, NotesEditLive, id: id))}
+  end
+
+  def handle_info({:note_created, note}, socket) do
+    socket = update(socket, :notes, fn notes -> [note | notes] end)
+    {:noreply, socket}
   end
 end
