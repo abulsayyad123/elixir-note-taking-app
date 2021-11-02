@@ -1,5 +1,9 @@
 # NoteApp
 
+### Project workflow
+<img src = 'https://github.com/abulsayyad123/elixir-note-taking-app/blob/master/note_app.gif' width='1000' height='700' />
+
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
