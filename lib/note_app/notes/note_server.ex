@@ -30,6 +30,7 @@ defmodule NoteApp.Notes.NoteServer do
   # Server
   @impl true
   def init(notes) do
+    IO.inspect(notes, label: "NOTES STATE:")
     {:ok, notes}
   end
 
